@@ -6,8 +6,13 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html')
 })
 
-io.on('connection', (sock) =>{
+io.on('connection', (socket) =>{
 	console.log('a user is connected!');
+
+	socket.on('disconnect', function(){
+	    console.log('user disconnected');
+	});
+
 })
 
 http.listen(3000, () =>{
