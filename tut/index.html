@@ -89,8 +89,8 @@
 		    	$('#userCount').text(`There are ${users} users chatting`);
 		    })
 		    socket.on('userMessageSent', function(msgObj){
-          console.log('msgObj ->',msgObj);
-		      $('#messages').append($('<li>').text(`${msgObj["myID"]}: ${msgObj.msg}`));
+          let textObj = `<li><b>${msgObj["myID"]}: </b> ${msgObj.msg}</li>`;
+		      $('#messages').append(textObj);
 		    });
 		</script>
   </body>
