@@ -12,8 +12,8 @@ io.on('connection', (socket) =>{
 	users++;
 	console.log(`There are ${users} users!`);
 
-	socket.on('chat message', (msg) =>{
-		io.emit('chat message', msg);
+	socket.on('userMessageSent', (msg) =>{
+		io.emit('userMessageSent', msg);
 	})
 
 	socket.on('disconnect', function(){

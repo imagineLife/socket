@@ -70,13 +70,13 @@
 		    
 		    $('form').submit(() => {
 		    
-		      socket.emit('chat message', $('#myInput').val());
+		      socket.emit('userMessageSent', $('#myInput').val());
 		      $('#m').val('');
 		      return false;
 
 		    });
 
-		    socket.on('chat message', function(msg){
+		    socket.on('userMessageSent', function(msg){
 		      $('#messages').append($('<li>').text(msg));
 		    });
 		</script>
