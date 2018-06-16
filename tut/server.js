@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
 let users = 0;
 
 io.on('connection', (socket) =>{
+	console.log(socket.id)
 	users++;
 	console.log(`There are ${users} users!`);
 
