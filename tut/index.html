@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       * { 
       	margin: 0;
@@ -35,6 +36,13 @@
       	padding: 10px; 
       }
 
+      .userCount{
+		display: inline;
+		position: fixed;
+		bottom: 7%;
+		right: 10px;
+	  }
+
       #messages {
        list-style-type: none;
        margin: 0;
@@ -57,7 +65,7 @@
     <ul id="messages"></ul>
 
     <!-- User-Count div -->
-    <p id="userCount"></p>
+    <p id="userCount" class="userCount"></p>
 
     <form action="">
       <input id="myInput" autocomplete="off" /><button>Send</button>
@@ -76,6 +84,9 @@
 
 		    });
 
+		    socket.on('userCountUpdated', (users) => {
+		    	$('#userCount').text(`There are ${users} users chatting`);
+		    })
 		    socket.on('userMessageSent', function(msg){
 		      $('#messages').append($('<li>').text(msg));
 		    });

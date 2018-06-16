@@ -12,6 +12,8 @@ io.on('connection', (socket) =>{
 	users++;
 	console.log(`There are ${users} users!`);
 
+	io.emit('userCountUpdated', users);
+
 	socket.on('userMessageSent', (msg) =>{
 		io.emit('userMessageSent', msg);
 	})
