@@ -67,30 +67,38 @@
     <!-- User-Count div -->
     <p id="userCount" class="userCount"></p>
 
-    <form action="">
+    <form action="" id="form">
       <input id="myInput" autocomplete="off" /><button>Send</button>
     </form>
 	
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
 		    var socket = io();
 		    
-		    $('form').submit(() => {
-		    
-          let inputVal = $('#myInput').val();
-		      socket.emit('userMessageSent', inputVal);
-		      $('#myInput').val('');
-		      return false;
+		    document.getElementById('form').addEventListener('submit', function(e) {
+            e.preventDefault(); //to prevent form submission
+            submit();
+          });
 
-		    });
+
+        function submit(){
+		    
+          let inputVal = document.getElementById('myInput').value;
+
+		      socket.emit('userMessageSent', inputVal);
+		      
+          document.getElementById('myInput').value = '';
+		      
+          return false;
+
+		    };
 
 		    socket.on('userCountUpdated', (users) => {
-		    	$('#userCount').text(`There are ${users} users chatting`);
+		    	document.getElementById('userCount').innerHTML = `There are ${users} users chatting`;
 		    })
 		    socket.on('userMessageSent', function(msgObj){
           let textObj = `<li><b>${msgObj["myID"]}: </b> ${msgObj.msg}</li>`;
-		      $('#messages').append(textObj);
+		      document.getElementById('messages').innerHTML += textObj;
 		    });
 		</script>
   </body>
