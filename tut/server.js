@@ -17,7 +17,7 @@ io.on('connection', (socket) =>{
 
 	socket.on('userMessageSent', (msg) =>{
 		let msgObj = { msg, myID };
-		io.emit('userMessageSent', msgObj);
+		socket.broadcast.emit('userMessageSent', msgObj);
 	})
 
 	socket.on('disconnect', function(){
