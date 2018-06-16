@@ -78,8 +78,9 @@
 		    
 		    $('form').submit(() => {
 		    
-		      socket.emit('userMessageSent', $('#myInput').val());
-		      $('#m').val('');
+          let inputVal = $('#myInput').val();
+		      socket.emit('userMessageSent', inputVal);
+		      $('#myInput').val('');
 		      return false;
 
 		    });
