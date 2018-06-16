@@ -9,14 +9,15 @@ app.get('/', (req, res) => {
 let users = 0;
 
 io.on('connection', (socket) =>{
-	console.log(socket.id)
+	let myID = socket.id;
 	users++;
 	console.log(`There are ${users} users!`);
 
 	io.emit('userCountUpdated', users);
 
 	socket.on('userMessageSent', (msg) =>{
-		io.emit('userMessageSent', msg);
+		let msgObj = { msg, myID };
+		io.emit('userMessageSent', msgObj);
 	})
 
 	socket.on('disconnect', function(){
