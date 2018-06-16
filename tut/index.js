@@ -20,7 +20,7 @@ io.on('connection', (socket) =>{
 
 	socket.on('disconnect', function(){
 		users--;
-		console.log(`There are ${users} users!`);
+		io.emit('userCountUpdated', users);
 	});
 
 })
