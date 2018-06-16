@@ -6,15 +6,19 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html')
 })
 
+let users = 0;
+
 io.on('connection', (socket) =>{
-	console.log('a user is connected!');
+	users++;
+	console.log(`There are ${users} users!`);
 
 	socket.on('chat message', (msg) =>{
 		io.emit('chat message', msg);
 	})
 
 	socket.on('disconnect', function(){
-	    console.log('user disconnected');
+		users--;
+		console.log(`There are ${users} users!`);
 	});
 
 })
