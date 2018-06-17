@@ -77,40 +77,40 @@
 	
 	<script src="/socket.io/socket.io.js"></script>
 		<script>
-		    var socket = io();
-		    
-		    document.getElementById('form').addEventListener('submit', function(e) {
-            e.preventDefault(); //to prevent form submission
-            submit();
-          });
+      var socket = io();
 
-        function postMyMessageLocally(val,elementID){
-           let textObj = `<li class="myMessage"><b>You: </b> ${val}</li>`;
-          document.getElementById(elementID).innerHTML += textObj;
-        }
+      document.getElementById('form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          submit();
+        });
 
-        function submit(){
-		    
-          let inputVal = document.getElementById('myInput').value;
-          
-          postMyMessageLocally(inputVal, 'messages');
+      function postMyMessageLocally(val,elementID){
+         let textObj = `<li class="myMessage"><b>You: </b> ${val}</li>`;
+        document.getElementById(elementID).innerHTML += textObj;
+      }
 
-		      socket.emit('userMessageSent', inputVal);
-		      
-          document.getElementById('myInput').value = '';
-		      
-          return false;
+      function submit(){
 
-		    };
+        let inputVal = document.getElementById('myInput').value;
+        
+        postMyMessageLocally(inputVal, 'messages');
 
-		    socket.on('userCountUpdated', (users) => {
-		    	document.getElementById('userCount').innerHTML = `There are ${users} users chatting`;
-		    })
+        socket.emit('userMessageSent', inputVal);
+        
+        document.getElementById('myInput').value = '';
+        
+        return false;
 
-		    socket.on('userMessageSent', function(msgObj){
-          let textObj = `<li><b>${msgObj["myID"]}: </b> ${msgObj.msg}</li>`;
-		      document.getElementById('messages').innerHTML += textObj;
-		    });
+      };
+
+      socket.on('userCountUpdated', (users) => {
+      	document.getElementById('userCount').innerHTML = `There are ${users} users chatting`;
+      })
+
+      socket.on('userMessageSent', function(msgObj){
+        let textObj = `<li><b>${msgObj["myID"]}: </b> ${msgObj.msg}</li>`;
+        document.getElementById('messages').innerHTML += textObj;
+      });
 		</script>
   </body>
 </html>
