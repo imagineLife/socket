@@ -37,11 +37,11 @@
       }
 
       .userCount{
-		display: inline;
-		position: fixed;
-		bottom: 40px;
-		right: 10px;
-	  }
+    		display: inline;
+    		position: fixed;
+    		bottom: 40px;
+    		right: 10px;
+	   }
 
       #messages {
        list-style-type: none;
@@ -55,6 +55,10 @@
 
       #messages li:nth-child(odd) {
       	background: #eee; 
+      }
+
+      .myMessage{
+        text-align: right;
       }
 
     </style>
@@ -80,10 +84,16 @@
             submit();
           });
 
+        function postMyMessageLocally(val,elementID){
+           let textObj = `<li class="myMessage"><b>You: </b> ${val}</li>`;
+          document.getElementById(elementID).innerHTML += textObj;
+        }
 
         function submit(){
 		    
           let inputVal = document.getElementById('myInput').value;
+          
+          postMyMessageLocally(inputVal, 'messages');
 
 		      socket.emit('userMessageSent', inputVal);
 		      
@@ -96,6 +106,7 @@
 		    socket.on('userCountUpdated', (users) => {
 		    	document.getElementById('userCount').innerHTML = `There are ${users} users chatting`;
 		    })
+
 		    socket.on('userMessageSent', function(msgObj){
           let textObj = `<li><b>${msgObj["myID"]}: </b> ${msgObj.msg}</li>`;
 		      document.getElementById('messages').innerHTML += textObj;
