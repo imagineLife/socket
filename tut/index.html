@@ -15,22 +15,21 @@
       }
       
       form {
-      	background: #000; 
-      	padding: 3px;
-      	position: fixed;
-      	bottom: 0;
-      	width: 100%; 
+        position: relative;
+        width: 100%;
+        margin: 300px auto;
       }
 
       form input {
-       border: 0;
-       padding: 10px;
-       width: 90%;
-       margin-right: .5%; 
+        border: 2px solid gray;
+        width: 50%;
+        margin-bottom: 10px;
+        height: 50px;
+        font-size: 20px;
       }
 
       form button {
-      	width: 9%;
+      	width: 45%;
       	background: rgb(130, 224, 255);
       	border: none;
       	padding: 10px; 
@@ -42,6 +41,10 @@
     		bottom: 40px;
     		right: 10px;
 	   }
+
+     #userIDForm, #userIDForm > input, #userIDForm > button{
+      width: 275px;
+     }
 
       #messages {
        list-style-type: none;
@@ -71,17 +74,23 @@
     <!-- User-Count div -->
     <p id="userCount" class="userCount"></p>
 
-    <form action="" id="form">
-      <input id="myInput" autocomplete="off" /><button>Send</button>
+    <form action="" id="messageForm" class="messageForm" hidden>
+      <input id="myInput" autocomplete="off" />
+      <button>Send</button>
     </form>
-	
+
+    <form id="userIDForm">
+      <input id="userID" autocomplete="off" />
+      <button>Set UserName</button>
+    </form>
+	 
 	<script src="/socket.io/socket.io.js"></script>
 		<script>
       var socket = io();
 
-      document.getElementById('form').addEventListener('submit', function(e) {
+      document.getElementById('messageForm').addEventListener('submit', function(e) {
           e.preventDefault();
-          submit();
+          submitMessage();
         });
 
       function postMyMessageLocally(val,elementID){
@@ -89,7 +98,7 @@
         document.getElementById(elementID).innerHTML += textObj;
       }
 
-      function submit(){
+      function submitMessage(){
 
         let inputVal = document.getElementById('myInput').value;
         
@@ -102,6 +111,11 @@
         return false;
 
       };
+
+      function setUserName(e){
+          e.preventDefault();
+          console.log('e ->',e);
+      }
 
       socket.on('userCountUpdated', (users) => {
       	document.getElementById('userCount').innerHTML = `There are ${users} users chatting`;
