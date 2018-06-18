@@ -86,6 +86,8 @@
 	 
 	<script src="/socket.io/socket.io.js"></script>
 		<script>
+
+      let storedUserName;
       var socket = io();
 
       document.getElementById('messageForm').addEventListener('submit',(e) => submitMessage(e));
@@ -114,7 +116,15 @@
       };
 
       function setUserName(e){
-          e.preventDefault();
+        e.preventDefault();
+        
+        //set glogal usernamve var value
+        storedUserName = document.getElementById('userID').value;
+
+        //hide the userNameForm
+        document.getElementById("userIDForm").style.display="none";
+        document.getElementById("messageForm").style.display="inline-block";
+
       }
 
       socket.on('userCountUpdated', (users) => {
