@@ -88,17 +88,18 @@
 		<script>
       var socket = io();
 
-      document.getElementById('messageForm').addEventListener('submit', function(e) {
-          e.preventDefault();
-          submitMessage();
-        });
+      document.getElementById('messageForm').addEventListener('submit',(e) => submitMessage(e));
+
+      document.getElementById('userIDForm').addEventListener('submit', (e) => setUserName(e));
 
       function postMyMessageLocally(val,elementID){
          let textObj = `<li class="myMessage"><b>You: </b> ${val}</li>`;
         document.getElementById(elementID).innerHTML += textObj;
       }
 
-      function submitMessage(){
+      //submit-message button form function
+      function submitMessage(e){
+        e.preventDefault();
 
         let inputVal = document.getElementById('myInput').value;
         
@@ -114,7 +115,6 @@
 
       function setUserName(e){
           e.preventDefault();
-          console.log('e ->',e);
       }
 
       socket.on('userCountUpdated', (users) => {
